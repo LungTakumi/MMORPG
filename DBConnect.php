@@ -1,10 +1,13 @@
 <?php #DBConnect.php
-$conn = new mysqli();
-$host ="localhost";
-$user ="root";
-$password = "";
-$dbname = "mmorpg";
-$conn -> connect($host, $user, $password, $dbname);
+$url = parse_url(getenv("CLEARDB_DATABASE_URL"));
+
+$server = $url["host"];
+$username = $url["user"];
+$password = $url["pass"];
+$db = substr($url["path"], 1);
+
+$conn = new mysqli($server, $username, $password, $db);
+
 if (mysqli_connect_errno()) {
  echo("Failed to connect, the error message is : ".
  mysqli_connect_error());
